@@ -1,4 +1,19 @@
 {
+  "plugins": [
+    [
+      "transform-imports",
+      {
+        "@fortawesome/fontawesome-free-solid": {
+          "preventFullImport": true,
+          "transform": "@fortawesome/fontawesome-free-solid/${member}"
+        },
+        "node-forge": {
+          "preventFullImport": true,
+          "transform": "node-forge/lib/${member}"
+        }
+      }
+    ]
+  ],
   "presets": [
     "@vue/app"
   ]

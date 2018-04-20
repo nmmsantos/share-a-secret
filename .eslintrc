@@ -1,7 +1,23 @@
 {
-  "root": true,
   "extends": [
     "plugin:vue/essential",
     "@vue/airbnb"
-  ]
+  ],
+  "root": true,
+  "rules": {
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignorePattern": "^// Flags:",
+        "ignoreRegExpLiterals": true,
+        "ignoreUrls": true,
+        "tabWidth": 2
+      }
+    ]
+  }
 }

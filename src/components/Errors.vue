@@ -7,7 +7,7 @@
 export default {
   name: 'Errors',
   props: {
-    errors: Array,
-  },
+    errors: Array
+  }
 };
 </script>

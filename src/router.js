@@ -10,14 +10,14 @@ const router = new Router({
     {
       path: '/',
       name: 'create',
-      component: Create,
+      component: Create
     },
     {
       path: '/unlock',
       name: 'unlock',
-      component: Unlock,
-    },
-  ],
+      component: Unlock
+    }
+  ]
 });
 
 export default router;
