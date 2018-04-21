@@ -14,7 +14,7 @@
       .buttons.is-grouped.is-right
         a.button.is-outlined(tabindex="-1" @click="generate")
           icon(fa="cogs")
-        a.button.is-outlined.is-info(tabindex="-1" @click="hide")
+        a.button.is-outlined.is-info(tabindex="-1" @click="entry.hidden = !entry.hidden")
           icon(:fa="entry.hidden ? 'eye-slash' : 'eye'")
         a.button.is-outlined.is-danger(tabindex="-1" @click="$emit('remove')")
           icon(fa="minus")
@@ -32,9 +32,6 @@ export default {
   methods: {
     generate() {
       this.entry.value = 'generated';
-    },
-    hide() {
-      this.entry.hidden = !this.entry.hidden;
     }
   },
   components: {

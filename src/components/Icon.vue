@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/fontawesome-free-solid';
 
 fontawesome.config.keepOriginalSource = false;
+
 fontawesome.library.add(
   faKey, faPlus, faMinus, faEyeSlash,
   faEye, faCogs, faFont, faLock, faCopy

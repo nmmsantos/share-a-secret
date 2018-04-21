@@ -38,10 +38,11 @@
             icon(fa="plus")
         create-row(
           v-for="(entry, index) in entries"
+          :key="index"
           :entry="entry"
           @add="add(index + 1)"
           @remove="remove(index)")
-        .buttons.is-grouped
+        .buttons
           button.button.is-primary(:disabled="errors" @click.prevent="create") Create
         div(v-if="Object.keys(link).length === 3")
           .has-text-weight-semibold Your secret is here, you can drag it to your bookmarks
@@ -50,10 +51,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Errors from '@/components/Errors.vue';
-import CreateRow from '@/components/CreateRow.vue';
 import Icon from '@/components/Icon.vue';
+import CreateRow from '@/components/CreateRow.vue';
 import { aes256CbcEncrypt } from '@/lib/crypto';
 
 export default {
@@ -129,8 +129,8 @@ export default {
   },
   components: {
     Errors,
-    CreateRow,
-    Icon
+    Icon,
+    CreateRow
   }
 };
 </script>
