@@ -1,5 +1,5 @@
-import 'node-forge/lib/sha1';
-import { random, pbkdf2, cipher, util } from 'node-forge';
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "sha1" }] */
+import { random, pbkdf2, cipher, util, sha1 } from 'node-forge';
 import base64url from 'base64-url';
 
 const randomInt = (min, max) => Math.floor(Math.random() * ((max - min) + 1)) + min;

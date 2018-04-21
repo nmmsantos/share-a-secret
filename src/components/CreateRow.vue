@@ -4,29 +4,27 @@
       .field
         .control.has-icons-left
           input.input(type="text" placeholder="Label" v-model="entry.label")
-          span.icon.is-left
-            i.fas.fa-font
+          icon.is-left(fa="font")
     .column.is-two-fifths
       .field
-        .control
+        .control.has-icons-left
           input.input(:type="entry.hidden ? 'password' : 'text'" placeholder="Value" v-model="entry.value")
+          icon.is-left(fa="font")
     .column
       .buttons.is-grouped.is-right
         a.button.is-outlined(tabindex="-1" @click="generate")
-          span.icon
-            i.fas.fa-cogs
+          icon(fa="cogs")
         a.button.is-outlined.is-info(tabindex="-1" @click="hide")
-          span.icon
-            i.fas(:class="entry.hidden ? 'fa-eye-slash' : 'fa-eye'")
+          icon(:fa="entry.hidden ? 'eye-slash' : 'eye'")
         a.button.is-outlined.is-danger(tabindex="-1" @click="$emit('remove')")
-          span.icon
-            i.fas.fa-minus
+          icon(fa="minus")
         a.button.is-outlined.is-success(tabindex="-1" @click="$emit('add')")
-          span.icon
-            i.fas.fa-plus
+          icon(fa="plus")
 </template>
 
 <script>
+import Icon from '@/components/Icon.vue';
+
 export default {
   props: {
     entry: Object
@@ -38,6 +36,9 @@ export default {
     hide() {
       this.entry.hidden = !this.entry.hidden;
     }
+  },
+  components: {
+    Icon
   }
 };
 </script>

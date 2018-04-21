@@ -4,72 +4,77 @@
       h1.title Create 'a' Secret
       form
         .field
-          label.label
-            | Name
+          label.label Name
           .control.has-icons-left
             input.input(
               :class="{ 'is-danger': nameErrors.length }"
               type="text" placeholder="Secret name" v-model="name")
-            span.icon.is-left
-              i.fas.fa-font
+            icon.is-left(fa="font")
           .help.is-danger(v-if="nameErrors.length")
             Errors(:errors="nameErrors")
         .columns
           .column
             .field
-              label.label
-                | Master password
+              label.label Master password
               .control.has-icons-left
                 input.input(
                   :class="{ 'is-danger': masterErrors.length }"
                   type="password" placeholder="Master password" v-model="master")
-                span.icon.is-left
-                  i.fas.fa-key
+                icon.is-left(fa="key")
               .help.is-danger(v-if="masterErrors.length")
                 Errors(:errors="masterErrors")
           .column
             .field
-              label.label
-                | Repeat
+              label.label Repeat
               .control.has-icons-left
                 input.input(
                   :class="{ 'is-danger': masterRepeatErrors.length }"
                   type="password" placeholder="Repeat master password" v-model="masterRepeat")
-                span.icon.is-left
-                  i.fas.fa-key
+                icon.is-left(fa="key")
               .help.is-danger(v-if="masterRepeatErrors.length")
                 Errors(:errors="masterRepeatErrors")
         .buttons.is-right
           a.button.is-outlined.is-success(tabindex="-1" @click="add(0)")
-            span.icon
-              i.fas.fa-plus
+            icon(fa="plus")
         create-row(
           v-for="(entry, index) in entries"
           :entry="entry"
           @add="add(index + 1)"
           @remove="remove(index)")
         .buttons.is-grouped
-          button.button.is-primary(:disabled="errors" @click.prevent="create")
-            | Create
-          span.has-text-weight-semibold(if="{ !hasErrors() && href !== '' }")
-            | Your secret is here, you can drag it to your bookmarks:
-            |
-            a.has-text-link.is-size-4(href="{ href }") asd
+          button.button.is-primary(:disabled="errors" @click.prevent="create") Create
+        div(v-if="Object.keys(link).length === 3")
+          .has-text-weight-semibold Your secret is here, you can drag it to your bookmarks
+          div
+            router-link.is-size-4(:to="{ name: 'unlock', params: link}") {{ name }}
 </template>
 
 <script>
 // @ is an alias to /src
 import Errors from '@/components/Errors.vue';
 import CreateRow from '@/components/CreateRow.vue';
+import Icon from '@/components/Icon.vue';
+import { aes256CbcEncrypt } from '@/lib/crypto';
 
 export default {
-  name: 'Create',
   data() {
     return {
       name: '',
       master: '',
       masterRepeat: '',
-      entries: []
+      entries: [
+        {
+          label: 'User',
+          value: '',
+          hidden: false
+        },
+        {
+          label: 'Pass',
+          value: '',
+          hidden: true
+        }
+      ],
+      link: {}
     };
   },
   computed: {
@@ -109,12 +114,23 @@ export default {
       });
     },
     create() {
-      console.log(this);
+      if (!this.errors) {
+        const entries = this.entries.map(e => ({
+          l: e.label,
+          v: e.value,
+          h: e.hidden
+        }));
+
+        this.link = aes256CbcEncrypt(this.master, JSON.stringify(entries));
+      } else {
+        this.link = {};
+      }
     }
   },
   components: {
     Errors,
-    CreateRow
+    CreateRow,
+    Icon
   }
 };
 </script>

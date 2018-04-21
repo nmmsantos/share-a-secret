@@ -13,7 +13,7 @@ const router = new Router({
       component: Create
     },
     {
-      path: '/unlock',
+      path: '/unlock/:ciphertext/:salt/:iterations',
       name: 'unlock',
       component: Unlock
     }
