@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import generator from 'generate-password-browser';
 import Icon from '@/components/Icon.vue';
 
 export default {
@@ -31,7 +32,15 @@ export default {
   },
   methods: {
     generate() {
-      this.entry.value = 'generated';
+      this.entry.value = generator.generate({
+        length: 10,
+        numbers: true,
+        symbols: true,
+        uppercase: true,
+        excludeSimilarCharacters: true,
+        exclude: '^~@{}[]"`',
+        strict: true
+      });
     }
   },
   components: {

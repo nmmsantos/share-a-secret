@@ -22,7 +22,7 @@ export default {
   computed: {
     representation() {
       if (this.entry.hidden) {
-        return '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;';
+        return '••••••••';
       }
 
       return this.entry.value;

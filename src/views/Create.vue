@@ -4,38 +4,49 @@
       h1.title Create 'a' Secret
       form
         .field
-          label.label Name
+          label.label(for="name") Name
           .control.has-icons-left
             input.input(
+              v-model="name"
               :class="{ 'is-danger': nameErrors.length }"
-              type="text" placeholder="Secret name" v-model="name")
+              id="name" type="text" placeholder="Secret name")
             icon.is-left(fa="font")
           .help.is-danger(v-if="nameErrors.length")
             Errors(:errors="nameErrors")
         .columns
           .column
             .field
-              label.label Master password
+              label.label(for="master") Master password
               .control.has-icons-left
                 input.input(
+                  v-model="master"
                   :class="{ 'is-danger': masterErrors.length }"
-                  type="password" placeholder="Master password" v-model="master")
+                  id="master" type="password" placeholder="Master password")
                 icon.is-left(fa="key")
               .help.is-danger(v-if="masterErrors.length")
                 Errors(:errors="masterErrors")
           .column
             .field
-              label.label Repeat
+              label.label(for="masterRepeat") Repeat
               .control.has-icons-left
                 input.input(
+                  v-model="masterRepeat"
                   :class="{ 'is-danger': masterRepeatErrors.length }"
-                  type="password" placeholder="Repeat master password" v-model="masterRepeat")
+                  id="masterRepeat" type="password" placeholder="Repeat master password")
                 icon.is-left(fa="key")
               .help.is-danger(v-if="masterRepeatErrors.length")
                 Errors(:errors="masterRepeatErrors")
-        .buttons.is-right
-          a.button.is-outlined.is-success(tabindex="-1" @click="add(0)")
-            icon(fa="plus")
+        .columns
+          .column.is-one-third.has-text-bottom
+            .field
+              label.label Label
+          .column.is-two-fifths.has-text-bottom
+            .field
+              label.label Value
+          .column
+            .buttons.is-right
+              a.button.is-outlined.is-success(tabindex="-1" @click="add(0)")
+                icon(fa="plus")
         create-row(
           v-for="(entry, index) in entries"
           :key="index"
@@ -134,3 +145,9 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+.has-text-bottom {
+  margin-top: auto;
+}
+</style>

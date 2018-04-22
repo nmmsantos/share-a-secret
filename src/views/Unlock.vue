@@ -4,12 +4,13 @@
       h1.title Unlock 'a' Secret
       form
         .field
-          label.label Master password
+          label.label(for="master") Master password
           .control.has-icons-left
             input.input(
+              v-model="master"
               :class="{ 'is-danger': masterErrors.length }"
-              type='password' placeholder='Master password' v-model="master"
-              @focus="isInvalid = false" autofocus)
+              @focus="isInvalid = false"
+              id="master" type='password' placeholder='Master password' autofocus)
             icon.is-left(fa="key")
           .help.is-danger(v-if="masterErrors.length")
             Errors(:errors="masterErrors")
@@ -22,8 +23,8 @@
       timer.progress.is-large(
         :max="20000"
         :start="20000"
-        ref="timer"
-        @ended="lock" @click.native="restart")
+        @ended="lock" @click.native="restart"
+        ref="timer")
       table.table.is-bordered.is-striped
         tbody
           view-row(
