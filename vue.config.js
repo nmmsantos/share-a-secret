@@ -6,6 +6,9 @@ module.exports = {
   configureWebpack: () => {
     if (process.env.NODE_ENV === 'production') {
       return {
+        output: {
+          publicPath: '/share-a-secret/'
+        },
         devtool: 'none',
         plugins: [
           new CompressionPlugin({
