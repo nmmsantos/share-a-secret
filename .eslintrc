@@ -1,6 +1,7 @@
 {
   "extends": [
-    "plugin:vue/essential",
+    "eslint:recommended",
+    "plugin:vue/recommended",
     "@vue/airbnb"
   ],
   "root": true,

@@ -13,6 +13,9 @@ tr
 import Icon from '@/components/Icon.vue';
 
 export default {
+  components: {
+    Icon
+  },
   props: {
     entry: {
       type: Object,
@@ -30,9 +33,6 @@ export default {
     isHttp() {
       return /^(https?):\/\//.test(this.entry.value);
     }
-  },
-  components: {
-    Icon
   }
 };
 </script>

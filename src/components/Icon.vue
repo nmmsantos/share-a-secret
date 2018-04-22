@@ -1,5 +1,5 @@
 <template lang="pug">
-  span.icon(v-html="icon")
+span.icon(v-html="icon")
 </template>
 
 <script>
@@ -22,7 +22,10 @@ export default {
       type: String,
       default: 'fas'
     },
-    fa: String
+    fa: {
+      type: String,
+      required: true
+    }
   },
   computed: {
     icon() {

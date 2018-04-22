@@ -1,15 +1,9 @@
 <template lang="pug">
-  progress(:value="current" :max="max")
+progress(:value="current" :max="max")
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      current: 0,
-      interval: null
-    };
-  },
   props: {
     max: {
       type: Number,
@@ -23,6 +17,18 @@ export default {
       type: Number,
       default: 100
     }
+  },
+  data() {
+    return {
+      current: 0,
+      interval: null
+    };
+  },
+  mounted() {
+    this.startTimer();
+  },
+  beforeDestroy() {
+    this.clearInterval();
   },
   methods: {
     clearInterval() {
@@ -44,12 +50,6 @@ export default {
         }
       }, this.rate);
     }
-  },
-  mounted() {
-    this.startTimer();
-  },
-  beforeDestroy() {
-    this.clearInterval();
   }
 };
 </script>

@@ -1,36 +1,36 @@
 <template lang="pug">
-  section.section
-    .container(v-if="isLocked")
-      h1.title Unlock 'a' Secret
-      form
-        .field
-          label.label(for="master") Master password
-          .control.has-icons-left
-            input.input(
-              v-model="master"
-              :class="{ 'is-danger': masterErrors.length }"
-              @focus="isInvalid = false"
-              id="master" type='password' placeholder='Master password' autofocus)
-            icon.is-left(fa="key")
-          .help.is-danger(v-if="masterErrors.length")
-            Errors(:errors="masterErrors")
-        .buttons
-          button.button.is-primary(:disabled="errors" @click.prevent="unlock")
-            icon.is-left(fa="lock")
-            span Unlock
-    .container(v-else)
-      h1.title View 'a' Secret
-      timer.progress.is-large(
-        :max="20000"
-        :start="20000"
-        @ended="lock" @click.native="restart"
-        ref="timer")
-      table.table.is-bordered.is-striped
-        tbody
-          view-row(
-            v-for="(entry, index) in entries"
-            :key="index"
-            :entry="entry")
+section.section
+  .container(v-if="isLocked")
+    h1.title Unlock 'a' Secret
+    form
+      .field
+        label.label(for="master") Master password
+        .control.has-icons-left
+          input.input(
+            v-model="master"
+            :class="{ 'is-danger': masterErrors.length }"
+            @focus="isInvalid = false"
+            id="master" type='password' placeholder='Master password' autofocus)
+          icon.is-left(fa="key")
+        .help.is-danger(v-if="masterErrors.length")
+          Errors(:errors="masterErrors")
+      .buttons
+        button.button.is-primary(:disabled="errors" @click.prevent="unlock")
+          icon.is-left(fa="lock")
+          span Unlock
+  .container(v-else)
+    h1.title View 'a' Secret
+    timer.progress.is-large(
+      :max="20000"
+      :start="20000"
+      @ended="lock" @click.native="restart"
+      ref="timer")
+    table.table.is-bordered.is-striped
+      tbody
+        view-row(
+          v-for="(entry, index) in entries"
+          :key="index"
+          :entry="entry")
 </template>
 
 <script>
@@ -42,6 +42,12 @@ import ViewRow from '@/components/ViewRow.vue';
 import { aes256CbcDecrypt } from '@/lib/crypto';
 
 export default {
+  components: {
+    Errors,
+    Icon,
+    Timer,
+    ViewRow
+  },
   data() {
     return {
       master: '',
@@ -63,6 +69,12 @@ export default {
         'masterErrors'
       ].some(computed => this[computed].length);
     }
+  },
+  mounted() {
+    this.clipboard = new ClipboardJS('.copyable');
+  },
+  beforeDestroy() {
+    this.clipboard.destroy();
   },
   methods: {
     unlock() {
@@ -92,18 +104,6 @@ export default {
     restart() {
       this.$refs.timer.startTimer();
     }
-  },
-  mounted() {
-    this.clipboard = new ClipboardJS('.copyable');
-  },
-  beforeDestroy() {
-    this.clipboard.destroy();
-  },
-  components: {
-    Errors,
-    Icon,
-    Timer,
-    ViewRow
   }
 };
 </script>
