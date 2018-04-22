@@ -2,6 +2,12 @@
 section.section
   .container(v-if="isLocked")
     h1.title Unlock 'a' Secret
+    h2.subtitle
+      | You can also create 'a' new one
+      |
+      router-link(
+        :to="{ name: 'create' }") here
+      | !
     form
       .field
         label.label(for="master") Master password

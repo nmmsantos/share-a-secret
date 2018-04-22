@@ -55,15 +55,22 @@ section.section
         @remove="remove(index)")
       .buttons
         button.button.is-primary(:disabled="errors" @click.prevent="create") Create
-      div(v-if="Object.keys(link).length === 3")
-        .has-text-weight-semibold Your secret is here, you can drag it to your bookmarks
-        div
-          router-link.is-size-4(:to="{ name: 'unlock', params: link}") {{ name }}
+  modal(:isDialog="true" ref="secret")
+    p.modal-card-title(slot="head") Secret
+    p Your secret is here, you can drag it to your bookmarks
+    hr
+    .has-text-centered
+      router-link.button.is-link.is-large(
+        v-if="Object.keys(link).length === 3"
+        :to="{ name: 'unlock', params: link}")
+          icon(fa="key")
+          span {{ name }}
 </template>
 
 <script>
 import Errors from '@/components/Errors.vue';
 import Icon from '@/components/Icon.vue';
+import Modal from '@/components/Modal.vue';
 import CreateRow from '@/components/CreateRow.vue';
 import { aes256CbcEncrypt } from '@/lib/crypto';
 
@@ -71,6 +78,7 @@ export default {
   components: {
     Errors,
     Icon,
+    Modal,
     CreateRow
   },
   data() {
@@ -138,6 +146,7 @@ export default {
         }));
 
         this.link = aes256CbcEncrypt(this.master, JSON.stringify(entries));
+        this.$refs.secret.open();
       } else {
         this.link = {};
       }
